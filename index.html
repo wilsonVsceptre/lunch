@@ -83,7 +83,7 @@
     function spin() {
         if (isSpinning) return;
         isSpinning = true;
-        resultDiv.innerText = "Choosing...";
+        resultDiv.innerText = "🙈🙉🙊";
 
         const spinRotation = Math.random() * 360 + 1440; // At least 4 full turns
         const duration = 4000;
@@ -103,29 +103,10 @@
                 requestAnimationFrame(animate);
             } else {
                 isSpinning = false;
-                calculateWinner(currentSpin);
+                resultDiv.innerText = "🤗🎉🤯";
             }
         }
         requestAnimationFrame(animate);
-    }
-
-    function calculateWinner(rotation) {
-        // 1. Get the total degrees and normalize to 0-359
-        // We subtract the rotation because the wheel moves clockwise 
-        // but the array indices technically move counter-clockwise relative to the pointer
-        const degrees = rotation % 360;
-        
-        // 2. Adjust for the North Pointer (90 degrees offset)
-        // 3. Divide by (360 / size) to find the index
-        const sliceWidth = 360 / size;
-        
-        // This formula aligns the visual slice under the top pointer to the array index
-        let prizeIndex = Math.floor((360 - degrees % 360 + 90) % 360 / sliceWidth);
-        
-        // Safety check for index bounds
-        prizeIndex = prizeIndex % size;
-
-        resultDiv.innerText = "Let's eat at: " + restaurants[prizeIndex];
     }
 
     drawWheel();
